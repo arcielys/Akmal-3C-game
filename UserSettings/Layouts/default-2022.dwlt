@@ -39,9 +39,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 962.6667
+    x: 962
     y: 0
-    width: 485.99994
+    width: 486.66663
     height: 656.6667
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -147,14 +147,14 @@ MonoBehaviour:
     y: 656.6667
     width: 1448.6666
     height: 450.6667
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 17}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
   - {fileID: 17}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -296,7 +296,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 380
     y: 0
-    width: 582.6667
+    width: 582
     height: 656.6667
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
@@ -361,14 +361,14 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Game/Scripts/Player
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\Gracefeel\Documents\Agate\Week1\AGC
+  m_LastProjectPath: D:\werks\Github\AGC-G3
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: bc740000
-    m_LastClickedID: 29884
-    m_ExpandedIDs: 00000000686d0000
+    m_SelectedIDs: 7c6f0000
+    m_LastClickedID: 28540
+    m_ExpandedIDs: 00000000686d0000406f00006c6f0000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -421,8 +421,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 066c0000
-    m_LastClickedInstanceID: 27654
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
@@ -538,8 +538,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 04690000
-      m_LastClickedID: 0
+      m_SelectedIDs: aa6a0000
+      m_LastClickedID: 27306
       m_ExpandedIDs: 2cfbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -587,7 +587,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 380
     y: 72.66667
-    width: 580.6667
+    width: 580
     height: 635.6667
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1082,9 +1082,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 962.6667
+    x: 962
     y: 72.66667
-    width: 483.99994
+    width: 484.66663
     height: 635.6667
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1140,23 +1140,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 483.99994
+      width: 484.66663
       height: 614.6667
     m_Scale: {x: 1.5, y: 1.5}
-    m_Translation: {x: 245.71487, y: 307.33334}
+    m_Translation: {x: 246.04822, y: 307.33334}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -163.80992
+      x: -164.03215
       y: -204.8889
-      width: 322.66663
+      width: 323.11108
       height: 409.7778
     m_MinimalGUI: 1
-  m_defaultScale: 0.37812495
-  m_LastWindowPixelSize: {x: 725.9999, y: 953.5}
+  m_defaultScale: 0.3786458
+  m_LastWindowPixelSize: {x: 726.99994, y: 953.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000

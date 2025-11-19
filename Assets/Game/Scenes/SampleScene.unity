@@ -3765,7 +3765,7 @@ MonoBehaviour:
   _rotationSmoothTime: 0.1
   _sprintSpeed: 450
   _walkSprintTransition: 60
-  _jumpForce: 25000
+  _jumpForce: 250
   _groundDetector: {fileID: 548177003}
   _detectorRadius: 0.2
   _groundLayer:
