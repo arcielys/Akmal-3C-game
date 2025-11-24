@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using Unity.VisualScripting;
+using Cinemachine;
 using UnityEngine;
+using Unity.Mathematics;
 
 public class PlayerMovement : MonoBehaviour
 {   
@@ -11,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _speed = _walkSpeed;
         _playerStance = PlayerStance.Stand;
+        HideAndLockCursor();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -44,6 +48,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private InputManager _input;
 
+    [SerializeField]
+    private CameraManager _cameraManager;
+
     private Rigidbody _rigidbody;
 
     [SerializeField]
@@ -58,14 +65,29 @@ public class PlayerMovement : MonoBehaviour
 
         if (isPlayerStanding)
         {
-            if (axisDirection.magnitude >= 0.1)
+            switch (_cameraManager.CameraState)
             {
-                float rotationAngle = Mathf.Atan2(axisDirection.x, axisDirection.y) * Mathf.Rad2Deg;
-                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationAngle, ref _rotationSmoothVelocity, _rotationSmoothTime);
-                transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
-                movementDirection = Quaternion.Euler(0f, rotationAngle, 0f) * Vector3.forward;
-                _rigidbody.AddForce(movementDirection * Time.deltaTime * _walkSpeed);
+                case CameraState.ThirdPerson:  
+                    if (axisDirection.magnitude >= 0.1)
+                    {
+                        float rotationAngle = Mathf.Atan2(axisDirection.x, axisDirection.y) * Mathf.Rad2Deg + _cameraTransform.eulerAngles.y;
+                        transform.rotation = Quaternion.Euler(0f, rotationAngle, 0f);
+                        movementDirection = Quaternion.Euler(0f, rotationAngle, 0f) * Vector3.forward;
+                        _rigidbody.AddForce(movementDirection * Time.deltaTime * _walkSpeed);
+                    }
+                    break;
+                case CameraState.FirstPerson:
+                    transform.rotation = Quaternion.Euler(0f, _cameraTransform.eulerAngles.y, 0f);
+                    Vector3 verticalDirection = axisDirection.y * transform.forward;
+                    Vector3 horizontalDirection = axisDirection.x * transform.right;
+                    movementDirection = verticalDirection + horizontalDirection;
+                    _rigidbody.AddForce(movementDirection * _speed * Time.deltaTime);
+                    break;
+                default:
+                    break;
             }
+            Vector3 velocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+            _animator.SetFloat("Velocity", velocity.magnitude * axisDirection.magnitude);
         }
         else if (isPlayerClimbing)
         {
@@ -180,30 +202,51 @@ public class PlayerMovement : MonoBehaviour
     private void StartClimb()
     {
         bool isInFrontOfClimbingWall = Physics.Raycast(_climbDetector.position,
-                                                    transform.forward,
-                                                    out RaycastHit hit,
-                                                    _climbCheckDistance,
-                                                    _climbableLayer);
+                                                        transform.forward,
+                                                        out RaycastHit hit,
+                                                        _climbCheckDistance,
+                                                        _climbableLayer);
         bool isNotClimbing = _playerStance != PlayerStance.Climb;
-    
         if (isInFrontOfClimbingWall && _isGrounded && isNotClimbing)
         {
             Vector3 offset = (transform.forward * _climbOffset.z) + (Vector3.up * _climbOffset.y);
             transform.position = hit.point - offset;
             _playerStance = PlayerStance.Climb;
             _rigidbody.useGravity = false;
+            _speed = _climbSpeed;
+            //new code for cameramanager to check isclamped
+            _cameraManager.SetFPSClampedCamera(true, transform.rotation.eulerAngles);
+            //change fov when climbing
+            _cameraManager.SetTPSFieldOfView(70);
         }
     }
 
 // Cancel Climbing
-private void CancelClimb()
-    {
-        if (_playerStance == PlayerStance.Climb)
+    private void CancelClimb()
         {
-            _playerStance = PlayerStance.Stand;
-            _rigidbody.useGravity = true;
-            transform.position -= transform.forward * 1f;
+            if (_playerStance == PlayerStance.Climb)
+            {
+                _playerStance = PlayerStance.Stand;
+                _rigidbody.useGravity = true;
+                transform.position -= transform.forward * 1f;
+                _speed = _walkSpeed; //added for cancel climb bug
+                //cancel climb camera manager check isclamped
+                _cameraManager.SetFPSClampedCamera(false, transform.rotation.eulerAngles);
+                //change back fov after climbing
+                _cameraManager.SetTPSFieldOfView(40);
+            }
         }
+
+// Camera
+    [SerializeField]
+    private Transform _cameraTransform;
+
+    private void HideAndLockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
+// Animation for Player Character
+    private Animator _animator;
 }

@@ -11,12 +11,13 @@ public class InputManager : MonoBehaviour
     public Action OnJumpInput;
 	public Action OnClimbInput;
 	public Action OnCancelClimb;
+	public Action OnChangePOV;
     private void Update() {
         CheckMovementInput();
 	    CheckSprintInput();
 	    CheckJumpInput();
 	    //CheckCrouchInput();
-	    //CheckChangePOVInput();
+	    CheckChangePOVInput();
 	    CheckClimbInput();
 	    //CheckGlideInput();
 	    CheckCancelInput();
@@ -77,17 +78,23 @@ public class InputManager : MonoBehaviour
 //	    }
 //	}
 
-//    	private void CheckChangePOVInput()
-//	{
-//	    bool isPressChangePOVInput = Input.GetKeyDown(KeyCode.Q);
-//	 
-//	    if (isPressChangePOVInput)
-//	    {
-//	        Debug.Log("Change POV");
-//	    }
-//	}
+    private void CheckChangePOVInput()
+	{
+	    bool isPressChangePOVInput = Input.GetKeyDown(KeyCode.Q);
+	 
+	    if (isPressChangePOVInput)
+	    {
+	        if (isPressChangePOVInput)
+            {
+                if (OnChangePOV != null)
+                {
+                    OnChangePOV();
+                }
+            }
+	    }
+	}
 
-    	private void CheckClimbInput()
+    private void CheckClimbInput()
 	{
 	    bool isPressClimbInput = Input.GetKeyDown(KeyCode.E);
 	 
