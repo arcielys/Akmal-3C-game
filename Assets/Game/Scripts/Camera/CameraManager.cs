@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -5,6 +6,8 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public Action OnChangePrespective;
+
     [SerializeField]
     public CameraState CameraState;
 
@@ -46,7 +49,8 @@ public class CameraManager : MonoBehaviour
 
     private void SwitchCamera() //to switch camera between fps and tps
     {
-	    if (CameraState == CameraState.ThirdPerson)
+	    OnChangePrespective();
+        if (CameraState == CameraState.ThirdPerson)
 	    {
 	        CameraState = CameraState.FirstPerson;
 	        _tpsCamera.gameObject.SetActive(false);
